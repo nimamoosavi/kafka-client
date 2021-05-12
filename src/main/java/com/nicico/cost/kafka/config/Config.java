@@ -31,6 +31,10 @@ public class Config {
     @Value("${kafka.consumer.autoOffsetReset:earliest}")
     private String autoOffsetReset;
 
+    @Value("${kafka.consumer.deserializer.class:null}")
+    private String clazz;
+
+
 
     @Bean
     public KafkaAdmin kafkaConfig() {
@@ -50,23 +54,25 @@ public class Config {
     }
 
     @Bean
-    public ConsumerFactory<String, String> consumerDefaultFactory() {
+    public ConsumerFactory<String, Object> consumerDefaultFactory() throws ClassNotFoundException {
+        Class<?> aClass;
         Map<String, Object> consumerConfig = new HashMap<>();
         consumerConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         consumerConfig.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        consumerConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        if (Boolean.FALSE.equals(clazz.equals("null")))
+            aClass = Class.forName(clazz);
+        else
+            aClass = StringDeserializer.class;
+        consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        consumerConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, aClass);
         consumerConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
         return new DefaultKafkaConsumerFactory<>(consumerConfig);
     }
 
-    public KafkaTemplate<String, String> kafkaDefaultTemplate() {
-        return new KafkaTemplate<>(producerDefaultFactory());
-    }
-
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() throws ClassNotFoundException {
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerDefaultFactory());
         return factory;
     }
