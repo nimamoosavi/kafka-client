@@ -17,6 +17,6 @@ public class ExampleHandler /*implements ManualHandler*/ {
     }
 
     public void handleMethode(ConsumerRecord<String, Object> o) {
-        // you can get ConsumerRecord of Object in this method
+        // you can get ConsumerRecord of Object in this method for example
     }
 }
