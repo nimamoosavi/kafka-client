@@ -113,4 +113,13 @@ public class ConsumerService implements KafkaConsumerService {
         }
     }
 
+    public synchronized <R> R getAndRemoveMessage(int index, Class<R> tClass) {
+        try {
+            Object o = kafkaCustomMessage.get(index - 1);
+            kafkaCustomMessage.remove(index - 1);
+            return tClass.cast(o);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
