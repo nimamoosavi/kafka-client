@@ -44,7 +44,7 @@ public class Config {
     }
 
     @Bean
-    public ProducerFactory<String, String> producerDefaultFactory() {
+    public ProducerFactory<String, Object> producerDefaultFactory() {
         Map<String, Object> producerConfig = new HashMap<>();
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);

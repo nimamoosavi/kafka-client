@@ -4,7 +4,9 @@ import com.nicico.cost.framework.domain.dto.BaseDTO;
 import com.nicico.cost.framework.enums.ResultStatus;
 import com.nicico.cost.kafka.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.core.*;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -16,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProducerService implements KafkaProducerService {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public ProducerFactory<String, Object> producerFactory(Map<String, Object> configs) {
         return new DefaultKafkaProducerFactory<>(configs);
@@ -26,19 +28,18 @@ public class ProducerService implements KafkaProducerService {
         return new KafkaTemplate<>(config);
     }
 
-    public void send(String topic, String o) {
+    public void send(String topic, Object o) {
         kafkaTemplate.send(topic, o);
     }
 
-    public BaseDTO<Boolean> sendSynchronous(String topic, String o) {
-        ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, o);
+    public BaseDTO<Boolean> sendSynchronous(String topic, Object o) {
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, o);
         BaseDTO.BaseDTOBuilder<Boolean> builder = BaseDTO.<Boolean>builder();
-        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+        future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
-            public void onSuccess(SendResult<String, String> result) {
+            public void onSuccess(SendResult<String, Object> result) {
                 builder.data(true).status(ResultStatus.SUCCESS);
             }
-
             @Override
             public void onFailure(Throwable ex) {
                 builder.data(false).status(ResultStatus.ERROR);
@@ -47,7 +48,7 @@ public class ProducerService implements KafkaProducerService {
         return builder.build();
     }
 
-    public void send(String topic, String o, ProducerFactory<String, Object> config) {
+    public void send(String topic, Object o, ProducerFactory<String, Object> config) {
         KafkaTemplate<String, Object> kafkaCustomTemplate = kafkaCustomTemplate(config);
         kafkaCustomTemplate.send(topic, o);
     }
