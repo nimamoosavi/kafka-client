@@ -2,8 +2,11 @@ package com.nicico.cost.kafka.service.impl;
 
 import com.nicico.cost.framework.domain.dto.BaseDTO;
 import com.nicico.cost.kafka.service.KafkaConsumerService;
+import com.nicico.cost.kafka.service.ManualHandler;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +19,25 @@ import static com.nicico.cost.framework.service.GeneralResponse.successCustomRes
 @RequiredArgsConstructor
 public class ConsumerService implements KafkaConsumerService {
 
+    @Value("${kafka.manual.handle:false}")
+    boolean manualHandle;
+
+
     private final List<Object> kafkaCustomMessage = new CopyOnWriteArrayList<>();
+    @Autowired(required = false)
+    public ManualHandler manualHandler;
 
 
     @KafkaListener(topics = "${kafka.topic}",
             groupId = "${kafka.consumer.group-id}",
             autoStartup = "${kafka.listener.enabled}",
             containerFactory = "kafkaListenerContainerFactory")
-    public void listen(ConsumerRecord<String, String> record) {
-        kafkaCustomMessage.add(record.value());
+    public void listen(ConsumerRecord<String, Object> o) {
+        if (manualHandle) {
+            manualHandler.handle(o);
+        } else {
+            kafkaCustomMessage.add(o.value());
+        }
     }
 
 
@@ -122,4 +135,6 @@ public class ConsumerService implements KafkaConsumerService {
             return null;
         }
     }
+
+
 }
