@@ -4,7 +4,7 @@ package com.nicico.cost.kafka.service.manual;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 /**
- * in class is example of handler
+ * in class is example of handler implementation
  */
 public class ExampleHandler /*implements ManualHandler*/ {
 
