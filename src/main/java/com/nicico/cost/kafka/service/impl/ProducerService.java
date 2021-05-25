@@ -1,7 +1,7 @@
 package com.nicico.cost.kafka.service.impl;
 
 import com.nicico.cost.framework.domain.dto.BaseDTO;
-import com.nicico.cost.framework.enums.ResultStatus;
+import com.nicico.cost.framework.enums.Status;
 import com.nicico.cost.kafka.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -38,11 +38,11 @@ public class ProducerService implements KafkaProducerService {
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onSuccess(SendResult<String, Object> result) {
-                builder.data(true).status(ResultStatus.SUCCESS);
+                builder.data(true).status(Status.SUCCESS);
             }
             @Override
             public void onFailure(Throwable ex) {
-                builder.data(false).status(ResultStatus.ERROR);
+                builder.data(false).status(Status.ERROR);
             }
         });
         return builder.build();
@@ -60,12 +60,12 @@ public class ProducerService implements KafkaProducerService {
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onSuccess(SendResult<String, Object> result) {
-                builder.data(true).status(ResultStatus.SUCCESS);
+                builder.data(true).status(Status.SUCCESS);
             }
 
             @Override
             public void onFailure(Throwable ex) {
-                builder.data(false).status(ResultStatus.ERROR);
+                builder.data(false).status(Status.ERROR);
             }
         });
         return builder.build();
