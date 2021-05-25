@@ -8,14 +8,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.nicico.cost.framework.service.GeneralResponse.successCustomResponse;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ConsumerService implements KafkaConsumerService {
 

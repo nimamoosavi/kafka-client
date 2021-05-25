@@ -8,13 +8,13 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.Map;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ProducerService implements KafkaProducerService {
 
@@ -40,6 +40,7 @@ public class ProducerService implements KafkaProducerService {
             public void onSuccess(SendResult<String, Object> result) {
                 builder.data(true).status(Status.SUCCESS);
             }
+
             @Override
             public void onFailure(Throwable ex) {
                 builder.data(false).status(Status.ERROR);
