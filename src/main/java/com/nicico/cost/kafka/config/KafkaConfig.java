@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-public class Config {
+public class KafkaConfig {
 
     @Value("${kafka.bootstrap:localhost:9092}")
     private String bootstrapAddress;
@@ -31,9 +31,17 @@ public class Config {
     @Value("${kafka.consumer.autoOffsetReset:earliest}")
     private String autoOffsetReset;
 
-    @Value("${kafka.consumer.deserializer.class:null}")
-    private String clazz;
+    @Value("${kafka.consumer.deserializer.class:}")
+    private String deserializeClazz;
 
+    @Value("${kafka.consumer.key.deserializer.class:}")
+    private String keyDeserializeClazz;
+
+    @Value("${kafka.producer.serialize.class:}")
+    private String serializeClazz;
+
+    @Value("${kafka.producer.key.serialize.class:}")
+    private String keySerializeClazz;
 
 
     @Bean
@@ -44,11 +52,21 @@ public class Config {
     }
 
     @Bean
-    public ProducerFactory<String, Object> producerDefaultFactory() {
+    public ProducerFactory<String, Object> producerDefaultFactory() throws ClassNotFoundException {
+        Class<?> aClass;
+        Class<?> keyAClass;
         Map<String, Object> producerConfig = new HashMap<>();
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        if (Boolean.FALSE.equals(keySerializeClazz == null))
+            keyAClass = Class.forName(keySerializeClazz);
+        else
+            keyAClass = StringSerializer.class;
+        producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keyAClass);
+        if (Boolean.FALSE.equals(serializeClazz == null))
+            aClass = Class.forName(serializeClazz);
+        else
+            aClass = StringSerializer.class;
+        producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, aClass);
         producerConfig.put(ProducerConfig.ACKS_CONFIG, ack);
         return new DefaultKafkaProducerFactory<>(producerConfig);
     }
@@ -56,12 +74,17 @@ public class Config {
     @Bean
     public ConsumerFactory<String, Object> consumerDefaultFactory() throws ClassNotFoundException {
         Class<?> aClass;
+        Class<?> keyAClass;
         Map<String, Object> consumerConfig = new HashMap<>();
         consumerConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         consumerConfig.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        if (Boolean.FALSE.equals(clazz.equals("null")))
-            aClass = Class.forName(clazz);
+        if (Boolean.FALSE.equals(keyDeserializeClazz == null))
+            keyAClass = Class.forName(keyDeserializeClazz);
+        else
+            keyAClass = StringDeserializer.class;
+        consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyAClass);
+        if (Boolean.FALSE.equals(deserializeClazz == null))
+            aClass = Class.forName(deserializeClazz);
         else
             aClass = StringDeserializer.class;
         consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
