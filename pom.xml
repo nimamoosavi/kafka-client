@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.nicico.cost</groupId>
     <artifactId>kafka</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-Released</version>
     <name>kafka</name>
     <description>Kafka project for nicico</description>
     <properties>
