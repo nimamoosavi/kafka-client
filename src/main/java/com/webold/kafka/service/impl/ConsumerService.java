@@ -1,8 +1,8 @@
-package com.nicico.cost.kafka.service.impl;
+package com.webold.kafka.service.impl;
 
-import com.nicico.cost.framework.domain.dto.BaseDTO;
-import com.nicico.cost.kafka.service.KafkaConsumerService;
-import com.nicico.cost.kafka.service.ManualHandler;
+import com.webold.framework.domain.dto.BaseDTO;
+import com.webold.kafka.service.KafkaConsumerService;
+import com.webold.kafka.service.ManualHandler;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.nicico.cost.framework.service.GeneralResponse.successCustomResponse;
+import static com.webold.framework.service.GeneralResponse.successCustomResponse;
 
 @Component
 @RequiredArgsConstructor

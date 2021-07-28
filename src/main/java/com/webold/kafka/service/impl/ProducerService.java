@@ -1,8 +1,8 @@
-package com.nicico.cost.kafka.service.impl;
+package com.webold.kafka.service.impl;
 
-import com.nicico.cost.framework.domain.dto.BaseDTO;
-import com.nicico.cost.framework.enums.Status;
-import com.nicico.cost.kafka.service.KafkaProducerService;
+import com.webold.framework.domain.dto.BaseDTO;
+import com.webold.framework.enums.Status;
+import com.webold.kafka.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;

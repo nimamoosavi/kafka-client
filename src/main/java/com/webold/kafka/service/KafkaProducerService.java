@@ -1,7 +1,7 @@
-package com.nicico.cost.kafka.service;
+package com.webold.kafka.service;
 
-import com.nicico.cost.framework.domain.dto.BaseDTO;
-import com.nicico.cost.framework.packages.kafka.KafkaProducer;
+import com.webold.framework.domain.dto.BaseDTO;
+import com.webold.framework.packages.kafka.KafkaProducer;
 import org.springframework.kafka.core.ProducerFactory;
 
 import java.util.Map;
