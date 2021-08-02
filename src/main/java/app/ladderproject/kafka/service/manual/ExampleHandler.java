@@ -1,4 +1,4 @@
-package com.webold.kafka.service.manual;
+package app.ladderproject.kafka.service.manual;
 
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;

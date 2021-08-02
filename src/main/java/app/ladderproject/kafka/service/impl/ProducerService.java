@@ -1,8 +1,8 @@
-package com.webold.kafka.service.impl;
+package app.ladderproject.kafka.service.impl;
 
 import com.webold.framework.domain.dto.BaseDTO;
 import com.webold.framework.enums.Status;
-import com.webold.kafka.service.KafkaProducerService;
+import app.ladderproject.kafka.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;

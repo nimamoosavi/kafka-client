@@ -1,4 +1,4 @@
-package com.webold.kafka.service;
+package app.ladderproject.kafka.service;
 
 import com.webold.framework.domain.dto.BaseDTO;
 import com.webold.framework.packages.kafka.KafkaConsumer;

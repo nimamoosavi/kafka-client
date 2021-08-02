@@ -1,6 +1,6 @@
-package com.webold.kafka.service;
+package app.ladderproject.kafka.service;
 
-import com.webold.kafka.service.manual.ExampleHandler;
+import app.ladderproject.kafka.service.manual.ExampleHandler;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 /**

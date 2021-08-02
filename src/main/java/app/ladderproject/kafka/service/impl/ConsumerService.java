@@ -1,8 +1,8 @@
-package com.webold.kafka.service.impl;
+package app.ladderproject.kafka.service.impl;
 
 import com.webold.framework.domain.dto.BaseDTO;
-import com.webold.kafka.service.KafkaConsumerService;
-import com.webold.kafka.service.ManualHandler;
+import app.ladderproject.kafka.service.KafkaConsumerService;
+import app.ladderproject.kafka.service.ManualHandler;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;

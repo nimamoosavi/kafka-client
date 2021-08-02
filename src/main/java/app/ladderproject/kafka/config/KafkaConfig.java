@@ -1,4 +1,4 @@
-package com.webold.kafka.config;
+package app.ladderproject.kafka.config;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
