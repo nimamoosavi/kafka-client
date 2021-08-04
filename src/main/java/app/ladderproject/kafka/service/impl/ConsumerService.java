@@ -1,6 +1,6 @@
 package app.ladderproject.kafka.service.impl;
 
-import com.webold.framework.domain.dto.BaseDTO;
+import app.ladderproject.core.domain.dto.BaseDTO;
 import app.ladderproject.kafka.service.KafkaConsumerService;
 import app.ladderproject.kafka.service.ManualHandler;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.webold.framework.service.GeneralResponse.successCustomResponse;
+import static app.ladderproject.core.service.GeneralResponse.successCustomResponse;
 
 @Component
 @RequiredArgsConstructor

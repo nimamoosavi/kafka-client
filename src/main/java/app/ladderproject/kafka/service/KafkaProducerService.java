@@ -1,7 +1,7 @@
 package app.ladderproject.kafka.service;
 
-import com.webold.framework.domain.dto.BaseDTO;
-import com.webold.framework.packages.kafka.KafkaProducer;
+import app.ladderproject.core.domain.dto.BaseDTO;
+import app.ladderproject.core.packages.kafka.KafkaProducer;
 import org.springframework.kafka.core.ProducerFactory;
 
 import java.util.Map;

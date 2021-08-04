@@ -1,13 +1,14 @@
 package app.ladderproject.kafka.service;
 
-import com.webold.framework.domain.dto.BaseDTO;
-import com.webold.framework.packages.kafka.KafkaConsumer;
+
+import app.ladderproject.core.domain.dto.BaseDTO;
+import app.ladderproject.core.packages.kafka.KafkaConsumer;
 
 import java.util.List;
 /**
  * @author nima
  * @version 1.0.1
- * @apiNote you must know that all data consume in list of Object in memory .. and when you dont empty this list ... application may be crashed
+ * @apiNote you must know that all data consume in list of Object in memory . and when you don't empty this list ... application may be crashed
  * @since 1.0.1
  */
 public interface KafkaConsumerService extends KafkaConsumer {
