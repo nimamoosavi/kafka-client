@@ -11,8 +11,8 @@ The library works with Java 8+, ladder Core 1.0.1+
 ![kafka Diagram](https://github.com/nimamoosavi/kafka-client/wiki/images/kafka.png)
 
 
-- [kafkaConsumer](KafkaConsumer)
-- [kafkaProducer](KafkaProducer)
+- [kafkaConsumer](/wiki/KafkaConsumer)
+- [kafkaProducer](/wiki/KafkaProducer)
 
 default class
 
