@@ -8,7 +8,8 @@ The library works with Java 8+, ladder Core 1.0.1+
 
 ## Structure
 
-[[images/kafka.png |"kafka"]]
+![kafka Diagram](https://github.com/nimamoosavi/kafka/wiki/images/kafka.png)
+
 
 - [kafkaConsumer](KafkaConsumer)
 - [kafkaProducer](KafkaProducer)
