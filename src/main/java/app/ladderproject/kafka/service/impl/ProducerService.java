@@ -1,8 +1,8 @@
 package app.ladderproject.kafka.service.impl;
 
-import app.ladderproject.core.domain.dto.BaseDTO;
-import app.ladderproject.core.enums.Status;
-import app.ladderproject.kafka.service.KafkaProducerService;
+
+import app.ladderproject.kafka.service.Handler;
+import app.ladderproject.kafka.service.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class ProducerService implements KafkaProducerService {
+public class ProducerService implements KafkaProducer {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
@@ -32,43 +32,19 @@ public class ProducerService implements KafkaProducerService {
         kafkaTemplate.send(topic, o);
     }
 
-    public BaseDTO<Boolean> sendSynchronous(String topic, Object o) {
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, o);
-        BaseDTO.BaseDTOBuilder<Boolean> builder = BaseDTO.<Boolean>builder();
-        future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
-            @Override
-            public void onSuccess(SendResult<String, Object> result) {
-                builder.data(true).status(Status.SUCCESS);
-            }
-
-            @Override
-            public void onFailure(Throwable ex) {
-                builder.data(false).status(Status.ERROR);
-            }
-        });
-        return builder.build();
-    }
-
-    public void send(String topic, Object o, ProducerFactory<String, Object> config) {
-        KafkaTemplate<String, Object> kafkaCustomTemplate = kafkaCustomTemplate(config);
-        kafkaCustomTemplate.send(topic, o);
-    }
-
-    public BaseDTO<Boolean> sendSynchronous(String topic, String o, ProducerFactory<String, Object> config) {
+    @Override
+    public void send(String topic, Object o, Handler handler) {
         KafkaTemplate<String, Object> kafkaCustomTemplate = kafkaCustomTemplate(config);
         ListenableFuture<SendResult<String, Object>> future = kafkaCustomTemplate.send(topic, o);
-        BaseDTO.BaseDTOBuilder<Boolean> builder = BaseDTO.<Boolean>builder();
-        future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
+        future.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onSuccess(SendResult<String, Object> result) {
-                builder.data(true).status(Status.SUCCESS);
+                handler.onSuccess();
             }
-
             @Override
             public void onFailure(Throwable ex) {
-                builder.data(false).status(Status.ERROR);
+                handler.onFailure(ex);
             }
         });
-        return builder.build();
     }
 }

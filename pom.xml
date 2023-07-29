@@ -14,33 +14,26 @@
     <name>kafka</name>
     <description>Kafka project for Ladder project</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <version>3.0.9</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
-            <groupId>app.ladderproject</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0.1-Released</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -55,8 +48,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version> <!-- or newer version -->
                 <configuration>
-                    <source>11</source> <!-- depending on your project -->
-                    <target>11</target> <!-- depending on your project -->
+                    <source>17</source> <!-- depending on your project -->
+                    <target>17</target> <!-- depending on your project -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
